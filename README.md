@@ -1,4 +1,4 @@
-# Morphological cell typing
+# Matching neurons across data sets
 
 ## Background
 
@@ -35,18 +35,19 @@ individual neurons.
 
 ## The data
 
-Three complete (!) sets of antennal lobe project neurons (ALPNs) reconstructed
-in two _Drosophila_ brains:
+Three complete sets of antennal lobe project neurons (ALPNs, ~335 neurons per
+set) reconstructed in two different _Drosophila_ brains:
 - FAFB (full adult fly brain) right hemisphere
 - FAFB left hemisphere
-- Janelia hemibrain ("FIB", right hemisphere)
+- Janelia hemibrain ("FIB") right hemisphere
 
 ### Constraints
 
 1. Neurons can only match within the same developmental (hemi-)lineage. This
    reduces the group size to ~90 in the worst case and to 1 in the best case.
+   See `/data/meta.csv` for that information.
 
-### Complications
+### Caveats
 
 1. Every now and then a neuron has a developmental hiccup and does something
    unexpected. That can range from a missing or additional branch to taking a
@@ -62,19 +63,20 @@ in two _Drosophila_ brains:
    because the primary neurite bundles for some lineages (like l2PNs) do not
    tightly co-fasciculate, and some neurons can look ambiguous.   
 
-### Contents
+### Files
 
 `/data/nblast_scores.csv` contains an all-by-all NBLAST similarity score matrix.
-See `/data/nblast.ipynb` for details but in brief:
+See `/data/nblast.ipynb` for details on how these data were generated but in brief:
 
 - FAFB and hemibrain (FIB) skeletons were transformed to the JRC2018F template brain
 - left FAFB skeletons were additionally mirrored to the right
+- small twigs (< 5 microns) were pruned off
 - skeletons were resampled to 1 micron and turned into dotprops (points + tangent vectors)
 - for FIB vs FAFB NBLASTs, the FAFB dotprops were truncated to the hemibrain volume
 - for FAFB vs FAFB NBLASTs, the full dotprops were used
 - scores were combined into one big score matrix
 
-*Important*: These scores are normalized but not _symmetrized_. Typically we
+**Important**: These scores are normalized but not _symmetrized_. Typically we
 use the mean of the forward and reverse scores which can be obtains like so:
 
 ```Python
@@ -97,9 +99,9 @@ use the mean of the forward and reverse scores which can be obtains like so:
 
 The data provided in this repository is based on three publications:
 
-- [Schlegel, Bates et al. (2020)](https://www.biorxiv.org/content/10.1101/2020.12.15.401257v2.full)
-- [Bates, Schlegel et al. (2020)](https://www.sciencedirect.com/science/article/pii/S0960982220308587)
-- [Scheffer et al. (2020)](https://elifesciences.org/articles/57443)
+- [Schlegel, Bates et al., bioRxiv (2020)](https://www.biorxiv.org/content/10.1101/2020.12.15.401257v2.full)
+- [Bates, Schlegel et al., Current Biology (2020)](https://www.sciencedirect.com/science/article/pii/S0960982220308587)
+- [Scheffer et al., eLife (2020)](https://elifesciences.org/articles/57443)
 
 In particular, Figure 4 and S6 in Schlegel, Bates _et al._ represent our
 attempts at cross-matching these ALPNs.
